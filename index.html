@@ -17,6 +17,7 @@
 	<script src="https://maps.googleapis.com/maps/api/js"></script>
 	<script>
 		function initialize() {
+			/* Put Google Maps on the page */
 			var mapCanvas = document.getElementById('map-canvas');
 			var mapOptions = {
 				center: new google.maps.LatLng(44.5403, -78.5463),
@@ -24,6 +25,14 @@
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 			var map = new google.maps.Map(mapCanvas, mapOptions);
+
+			/* Put markers on Google Maps */
+			var twitterIconUrl = 'https://abs.twimg.com/favicons/favicon.ico';
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(44.5403, -78.5463),
+				map: map,
+				icon: twitterIconUrl
+			});
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
