@@ -29,8 +29,19 @@
 			var map = new google.maps.Map(mapCanvas, mapOptions);
 
 			/* Generate random markers */
+			var names = ['Polina', 'Sri', 'Lev', 'Jim', 'Farid'];
+			var pics = [
+				'http://images3.alphacoders.com/199/199875.jpg',
+				'http://www.unlulerkervani.com/data/media/1021/Sendhil-Ramamurthy_4.jpg',
+				'https://s-media-cache-ak0.pinimg.com/236x/75/9a/a6/759aa6249d3c3ffb64b34b53f6697105.jpg',
+				'https://s-media-cache-ak0.pinimg.com/474x/bc/9d/5e/bc9d5e337b511530ccc3fe2eff0ca8c1.jpg',
+				'http://i.dailymail.co.uk/i/pix/2013/10/10/article-2451604-18A46B5B00000578-415_306x423.jpg'
+			];
 			for (var i = 0; i < 100; i++) {
+				var personId = Math.floor(Math.random() * 5);
 				twitterMarkers.push({
+					username: names[personId],
+					picUrl: pics[personId],
 					lat: Math.random() * 180 - 90, // -90 ... +90
 					lng: Math.random() * 360 - 180 // -180 ... +180
 				});
@@ -38,11 +49,17 @@
 
 			/* Put markers on Google Maps */
 			var twitterIconUrl = 'https://abs.twimg.com/favicons/favicon.ico';
-			twitterMarkers.forEach(function(marker) {
+			twitterMarkers.forEach(function(markerData) {
 				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(marker.lat, marker.lng),
+					position: new google.maps.LatLng(markerData.lat, markerData.lng),
 					map: map,
 					icon: twitterIconUrl
+				});
+				var infoWin = new google.maps.InfoWindow({
+					content: '<h4>' + markerData.username + '</h4><img height="100px" src="' + markerData.picUrl + '"/>'
+				});
+				google.maps.event.addListener(marker, 'click', function() {
+					infoWin.open(map, marker);
 				});
 			});
 		}
